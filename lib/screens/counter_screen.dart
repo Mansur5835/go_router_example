@@ -26,7 +26,6 @@ class CounterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('more build');
     return BlocBuilder<CounterBloc, int>(
       builder: (context, state) {
         return Scaffold(
@@ -40,7 +39,9 @@ class CounterScreen extends StatelessWidget {
                 TextButton(
                   onPressed: () {
                     context.navigateTo.newCounterValue().then((value) {
-                      context.read<CounterBloc>().add(CounterInk(value));
+                      if (value != null) {
+                        context.read<CounterBloc>().add(CounterInk(value));
+                      }
                     });
                   },
                   child: Text('Set New Value'),

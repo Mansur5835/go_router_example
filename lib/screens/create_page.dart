@@ -6,6 +6,13 @@ class CreatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Create Page'),
+      ),
+      body: Center(
+        child: Text('Create New value'),
+      ),
+    );
   }
 }

@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextButton(
-                  child: const Text('Go to Counter'),
+                  child: const Text('Counter Page'),
                   onPressed: () {
                     context.navigateTo.counterPage();
                   },
