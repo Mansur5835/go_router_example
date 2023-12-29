@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:go_router_example/blocs/counter_bloc.dart';
 import 'package:go_router_example/navigation/extension/context_ext.dart';
+
+class MainRoute extends GoRouteData {
+  @override
+  Page buildPage(BuildContext context, GoRouterState state) {
+    return NoTransitionPage(
+      child: BlocProvider(
+        create: (context) => CounterBloc(),
+        child: const MainScreen(),
+      ),
+    );
+  }
+}
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

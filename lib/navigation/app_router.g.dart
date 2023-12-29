@@ -11,29 +11,37 @@ List<RouteBase> get $appRoutes => [
       $newCounterValueRoute,
     ];
 
-RouteBase get $dashboardRoute => ShellRouteData.$route(
-      navigatorKey: DashboardRoute.$navigatorKey,
+RouteBase get $dashboardRoute => StatefulShellRouteData.$route(
       factory: $DashboardRouteExtension._fromState,
-      routes: [
-        GoRouteData.$route(
-          path: '/main',
-          factory: $MainRouteExtension._fromState,
+      branches: [
+        StatefulShellBranchData.$branch(
           routes: [
             GoRouteData.$route(
-              path: 'counter-screen',
-              factory: $CounterRouteExtension._fromState,
+              path: '/main',
+              factory: $MainRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'counter-screen',
+                  factory: $CounterRouteExtension._fromState,
+                ),
+              ],
             ),
           ],
         ),
-        GoRouteData.$route(
-          path: '/create-page',
-          factory: $CreateRouteExtension._fromState,
+        StatefulShellBranchData.$branch(
+          routes: [
+            GoRouteData.$route(
+              path: '/create-page',
+              factory: $CreateRouteExtension._fromState,
+            ),
+          ],
         ),
       ],
     );
 
 extension $DashboardRouteExtension on DashboardRoute {
-  static DashboardRoute _fromState(GoRouterState state) => DashboardRoute();
+  static DashboardRoute _fromState(GoRouterState state) =>
+      const DashboardRoute();
 }
 
 extension $MainRouteExtension on MainRoute {

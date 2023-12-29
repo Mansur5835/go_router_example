@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:go_router_example/blocs/counter_bloc.dart';
 import 'package:go_router_example/screens/create_page.dart';
@@ -11,50 +10,30 @@ import '../screens/main_screen.dart';
 
 part 'app_router.g.dart';
 
-final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>();
-
-@TypedShellRoute<DashboardRoute>(routes: [
-  TypedGoRoute<MainRoute>(
-    path: MainScreen.path,
-    routes: [
-      TypedGoRoute<CounterRoute>(
-        path: CounterRoute.path,
-      ),
-    ],
-  ),
-  TypedGoRoute<CreateRoute>(
-    path: CreatePage.path,
-  ),
+@TypedStatefulShellRoute<DashboardRoute>(branches: [
+  TypedStatefulShellBranch(routes: [
+    TypedGoRoute<MainRoute>(
+      path: MainScreen.path,
+      routes: [
+        TypedGoRoute<CounterRoute>(
+          path: CounterRoute.path,
+        ),
+      ],
+    ),
+  ]),
+  TypedStatefulShellBranch(routes: [
+    TypedGoRoute<CreateRoute>(
+      path: CreatePage.path,
+    ),
+  ]),
 ])
-class DashboardRoute extends ShellRouteData {
-  static final GlobalKey<NavigatorState> $navigatorKey = shellNavigatorKey;
-
-  static ValueNotifier<Widget?> control = ValueNotifier(null);
-
+class DashboardRoute extends StatefulShellRouteData {
+  const DashboardRoute();
   @override
   Widget builder(BuildContext context, GoRouterState state, Widget navigator) {
     return DashboardPage(
       routes: navigator,
     );
-  }
-}
-
-class MainRoute extends GoRouteData {
-  @override
-  Page buildPage(BuildContext context, GoRouterState state) {
-    return NoTransitionPage(
-      child: BlocProvider(
-        create: (context) => CounterBloc(),
-        child: const MainScreen(),
-      ),
-    );
-  }
-}
-
-class CreateRoute extends GoRouteData {
-  @override
-  Page<void> buildPage(BuildContext context, GoRouterState state) {
-    return NoTransitionPage(child: CreatePage());
   }
 }
 
